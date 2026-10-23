@@ -14,6 +14,11 @@ co = ChromiumOptions()
 co.no_imgs(False)
 co.headless(True)
 
+# Argumentos vitales para que Chromium corra en contenedores Linux sin interfaz
+co.set_argument('--no-sandbox')
+co.set_argument('--disable-dev-shm-usage')
+co.set_argument('--headless=new')
+
 # Detectar automáticamente la ruta de Chromium según el sistema
 if os.path.exists("/usr/bin/chromium-browser"):
     co.set_browser_path("/usr/bin/chromium-browser")
