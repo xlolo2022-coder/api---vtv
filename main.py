@@ -9,16 +9,16 @@ app = FastAPI(
     version="1.0"
 )
 
-# Configuración de Chromium para entornos headless / Docker / Render
+# Configuración de Chromium para entornos headless / Docker (Ubuntu / Render)
 co = ChromiumOptions()
 co.no_imgs(False)
-co.headless(True)  # En servidores corre sin pantalla física
+co.headless(True)
 
-# Buscar el binario de Chromium si está en Linux / Render
-if os.path.exists("/usr/bin/chromium"):
-    co.set_browser_path("/usr/bin/chromium")
-elif os.path.exists("/usr/bin/chromium-browser"):
+# Detectar automáticamente la ruta de Chromium según el sistema
+if os.path.exists("/usr/bin/chromium-browser"):
     co.set_browser_path("/usr/bin/chromium-browser")
+elif os.path.exists("/usr/bin/chromium"):
+    co.set_browser_path("/usr/bin/chromium")
 
 print("[*] Iniciando navegador Chromium en segundo plano...")
 page = ChromiumPage(addr_or_opts=co)
